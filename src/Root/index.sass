@@ -1,0 +1,51 @@
+$background: #2E3438
+
+
+body
+  margin: 0
+  padding: 0
+  background: $background
+
+
+*
+  font: 1rem 'Rubik', sans-serif
+  color: white
+
+  letter-spacing: 0.04em
+  white-space: nowrap
+  overflow: hidden
+
+
+#root
+  padding: 3em 4em
+
+
+h1
+  font-weight: 700
+  font-size: 2em
+
+.flex
+  display: flex
+  align-items: center
+
+  &:not(&_v)
+    & > * + *
+      margin-left: 1em
+
+  &_v
+    flex-direction: column
+
+    & > * + *
+      margin-top: 0.5em
+
+
+.dimmed-text
+  color: #B2B2B2
+  font-size: 0.8em
+
+  &_bright
+    color: #C9C9C9
+
+
+img
+  user-select: none

@@ -64,11 +64,15 @@ export const Button = styled.button<ButtonProps>`
     &:hover {
         box-shadow: inset 0 0 10em 10em rgba(255, 255, 255, 0.1);
     }
+
+    &:active {
+        box-shadow: inset 0 0 10em 10em rgba(255, 255, 255, 0.3);
+    }
 `
 
 
 export const OutlinedButton = styled(Button)<ButtonProps>`
-    ${props => props.color && `border: 0.25em solid ${getColor(props.color)}`};
+    ${props => props.color && `border: 0.125em solid ${getColor(props.color)}`};
     ${props => props.color && `* {color: ${getColor(props.color)}}`};
     ${props => props.color && 'background: none'};
 `

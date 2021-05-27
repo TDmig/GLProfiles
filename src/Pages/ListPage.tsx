@@ -1,12 +1,14 @@
-import { ListBlock } from 'Components/ListBlock/ListBlock';
-import React from 'react'
 import FolderBar from "../Components/FolderBar";
 import ProfileItem from "../Components/ListBlock/ProfileItem";
 import { Profile } from '../types';
-import { EditModal, Modal } from '../Components/Popups/index';
-import { useState } from 'react';
+import { EditModal } from '../Components/Popups/index';
+import React, { useState } from 'react';
 import Select from '../Components/Select';
 import { TextArea } from '../Components/SearchField';
+import { ListBlock } from "Components/ListBlock/ListBlock";
+import styled from "styled-components";
+import { Button, OutlinedButton } from '../Components/Buttons/index';
+import { CircledCheckbox } from '../Components/LetterIcon/index';
 
 
 
@@ -25,6 +27,21 @@ const actualProfiles: Array<Profile> = [{
     'cookie': ['CGIC', 'other 1', 'other 2', 'other 3'],
     'notes': 'Заметка с паролями и логинами для амазона',
     'profileID': '5ff85f4d355d435fe7b95a52',
+},{
+    'name': 'Moscow',
+    'folders': ['Cities', 'Folder2'],
+    'status': 'running',
+    'platform': 'Linux', 
+    'lastRun': '14 May 2021',
+
+    'proxy': ['SOCKS4 Proxy', 'RU (Russia)', '127.0.4.1'],
+    'language': ['French', 'English (UK)',],
+    'timezone': 'London (+00:00)',
+    'resolution': '1920x1080',
+    'geolocation': 'Moscow',
+    'cookie': ['CGIC', 'other 1', 'other 2', 'other 3', 'other 4', 'other5'],
+    'notes': 'Пример заметки #2',
+    'profileID': '71185f4d355d435fe7b95a53',
 }]
 
 
@@ -125,9 +142,73 @@ function FilledEditModal(props: FilledEditModalProps) {
 }
 
 
+const SelectionBarWrapper = styled.div`
+    display: grid;
+    grid-template-columns: repeat(6, min-content) 1fr min-content;
+    grid-column-gap: 1.5em;
+
+    align-items: center;
+`
+
+
+interface SelectionBarProps {
+    allSelected: boolean
+    onToggleSelectAll: () => void
+    onCancel: () => void
+}
+
+
+function SelectionBar(props: SelectionBarProps) {
+    return <ListBlock>
+        <SelectionBarWrapper>
+            <CircledCheckbox isActive={props.allSelected} onToggle={() => props.onToggleSelectAll()}/>
+            <OutlinedButton color='green'>
+                <span className='material-icons'>shortcut</span>
+                <span>Share</span>
+            </OutlinedButton>
+            <OutlinedButton color='green'>
+                <span className='material-icons'>create_new_folder</span>
+                <span>Add to Folder</span>
+            </OutlinedButton>
+            <OutlinedButton color='green'>
+                <span className='material-icons'>content_copy</span>
+                <span>Clone</span>
+            </OutlinedButton>
+            <OutlinedButton color='green'>
+                <span className='material-icons'>fingerprint</span>
+                <span>New Fingerprint</span>
+            </OutlinedButton>
+            <OutlinedButton color='red'>
+                <span className='material-icons'>delete</span>
+                <span>Delete</span>
+            </OutlinedButton>
+            <div/>
+            <div>
+                <Button circle onClick={() => props.onCancel()}>
+                    <span className='material-icons'>cancel</span>
+                </Button>
+            </div>
+        </SelectionBarWrapper>
+    </ListBlock>
+}
+
+
 export default function ListPage() {
     const [profiles, setProfiles] = useState(actualProfiles)
     const [editing, setEditing] = useState<{profile: Profile, field: string} | null>(null)
+
+    const [selectedProfiles, setSelectedProfiles] = useState<string[]>([])
+
+
+    const hasSelected = selectedProfiles.length > 0
+    const allSelected = selectedProfiles.length === profiles.length
+
+
+    function toggleSelect(id: string) {
+        selectedProfiles.includes(id) 
+            ? setSelectedProfiles(selectedProfiles.filter(item => item !== id))
+            : setSelectedProfiles([...selectedProfiles, id])
+    }
 
 
     function onEdit(f: string, profile: Profile) {
@@ -141,10 +222,19 @@ export default function ListPage() {
 
     return <div className="list-page">
         <FolderBar/>
+        {hasSelected && <SelectionBar
+            allSelected={allSelected}
+            onToggleSelectAll={() => allSelected ? setSelectedProfiles([]) : setSelectedProfiles(
+                profiles.reduce((acc: string[], cur) => [...acc, cur.profileID], [])
+            )}
+            onCancel={() => setSelectedProfiles([])}
+        />}
 
         {profiles.map((profile, i) => 
             <ProfileItem profile={profile} key={i}
                 onEdit={(f) => onEdit(f, profile)}
+                isSelected={selectedProfiles.includes(profile.profileID)}
+                onToggleSelect={() => toggleSelect(profile.profileID)}
             />
         )}
 

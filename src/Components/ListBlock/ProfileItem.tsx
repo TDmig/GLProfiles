@@ -1,7 +1,7 @@
 import { Button } from 'Components/Buttons';
 import React, { useState } from 'react'
 import { ListBlock } from "./ListBlock";
-import LetterIcon from '../LetterIcon/index';
+import LetterIcon, { LetterWithCheckbox } from '../LetterIcon/index';
 import styled from 'styled-components';
 import ProfileStatus from './ProfileStatus'
 import { Profile, ProfileSummary } from '../../types'
@@ -18,7 +18,17 @@ const ItemGridWrapper = styled.div`
 `
 
 
-export default function ProfileItem(props: {profile: Profile, onEdit: (field: string) => void}) {
+interface ProfileItemProps {
+    profile: Profile
+
+    isSelected: boolean
+    onToggleSelect: () => void
+
+    onEdit: (field: string) => void
+}
+
+
+export default function ProfileItem(props: ProfileItemProps) {
     const [extended, setExtended] = useState(false)
 
 
@@ -27,6 +37,8 @@ export default function ProfileItem(props: {profile: Profile, onEdit: (field: st
             {...props.profile} 
             onStatusChange={() => props.onEdit('status')}
             onExtendToggle={() => setExtended(prev => !prev)}
+            isSelected={props.isSelected}
+            onToggleSelect={() => props.onToggleSelect()}
         />
         {extended && <ProfileTable 
                 profile={props.profile}
@@ -38,15 +50,20 @@ export default function ProfileItem(props: {profile: Profile, onEdit: (field: st
 
 
 interface ProfileSummaryProps extends ProfileSummary {
-    onStatusChange: (() => void)
-    onExtendToggle: (() => void)
+    isSelected: boolean
+    onToggleSelect: () => void
+
+    onStatusChange: () => void
+    onExtendToggle: () => void
 }
 
 
 function ProfileSummaryItem(props: ProfileSummaryProps) {
     const buttonText = props.status === 'running' ? 'Stop' : 'Run profile'
     return <ItemGridWrapper>
-        <LetterIcon letter={props.name}/>
+        <LetterWithCheckbox letter={props.name} 
+            isActive={props.isSelected} 
+            onToggle={() => props.onToggleSelect()}/>
         <ProfilePrimary name={props.name} folders={props.folders}/>
         <ProfileStatus status={props.status}/>
         <img src={`/svg/${props.platform}.svg`} alt={`Platform: ${props.platform}`}/>

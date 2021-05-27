@@ -156,8 +156,8 @@ export default function ProfileTable({profile, onEdit}:
             <div>
                 <b>Folders</b>
                 <HorizontalFlex margin='1em'>
-                    {profile.folders.map((folder) => 
-                        <span>
+                    {profile.folders.map((folder, i) => 
+                        <span key={i}>
                             {folder}
                         </span>
                     )}

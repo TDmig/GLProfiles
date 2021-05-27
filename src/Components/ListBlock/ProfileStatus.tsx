@@ -1,7 +1,5 @@
 import styled from "styled-components"
-
-
-export type status = "running" | "ready"
+import { status } from '../../types'
 
 
 export default function ProfileStatus(props: {status: "running" | "ready"}) {

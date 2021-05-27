@@ -1,23 +1,12 @@
 import { Button } from 'Components/Buttons';
-import React from 'react'
+import React, { useState } from 'react'
 import { ListBlock } from "./ListBlock";
 import LetterIcon from '../LetterIcon/index';
 import styled from 'styled-components';
-import ProfileStatus, {status} from './ProfileStatus'
-
-
-
-type platform = "Linux" | "Mac" | "Windows"
-
-
-
-interface ProfileItemProps {
-    name: string
-    folders: Array<string>
-    status: status
-    platform: platform
-    lastRun: string
-}
+import ProfileStatus from './ProfileStatus'
+import { Profile, ProfileSummary, status } from '../../types'
+import ProfileTable from './ProfileTable';
+import { DimmedText } from '../TextStyles';
 
 
 const ItemGridWrapper = styled.div`
@@ -29,24 +18,50 @@ const ItemGridWrapper = styled.div`
 `
 
 
-export default function ProfileItem(props: ProfileItemProps) {
-    const buttonText = props.status === 'running' ? 'Stop' : 'Run profile'
+export default function ProfileItem(props: {profile: Profile}) {
+    const [extended, setExtended] = useState(false)
+
+
     return <ListBlock>
-        <ItemGridWrapper>
-            <LetterIcon letter={props.name}/>
-            <ProfilePrimary name={props.name} folders={props.folders}/>
-            <ProfileStatus status={props.status}/>
-            <img src={`/svg/${props.platform}.svg`} alt={`Platform: ${props.platform}`}/>
-            <div/>
-            <span className="dimmed-text">Last run {props.lastRun}</span>
-            <Button color={props.status === 'running' ? 'red' : 'green'}>
-                {buttonText}
-            </Button>
-            <Button color='dark' circle>
-                <span className="material-icons">settings</span>
-            </Button>
-        </ItemGridWrapper>
+        <ProfileSummaryItem 
+            {...props.profile} 
+            onStatusChange={() => {}}
+            onExtendToggle={() => setExtended(prev => !prev)}
+        />
+        {extended && <ProfileTable 
+                profile={props.profile}
+                onEdit={(f) => alert(f)}
+            />
+        }
     </ListBlock>
+}
+
+
+interface ProfileSummaryProps extends ProfileSummary {
+    onStatusChange: (() => void)
+    onExtendToggle: (() => void)
+}
+
+
+function ProfileSummaryItem(props: ProfileSummaryProps) {
+    const buttonText = props.status === 'running' ? 'Stop' : 'Run profile'
+    return <ItemGridWrapper>
+        <LetterIcon letter={props.name}/>
+        <ProfilePrimary name={props.name} folders={props.folders}/>
+        <ProfileStatus status={props.status}/>
+        <img src={`/svg/${props.platform}.svg`} alt={`Platform: ${props.platform}`}/>
+        <div/>
+        <DimmedText>Last run {props.lastRun}</DimmedText>
+        <Button 
+            color={props.status === 'running' ? 'red' : 'green'}
+            onClick={() => props.onStatusChange()}
+        >
+            {buttonText}
+        </Button>
+        <Button color='dark' circle onClick={() => props.onExtendToggle()}>
+            <span className="material-icons">settings</span>
+        </Button>
+    </ItemGridWrapper>
 }
 
 

@@ -12,7 +12,7 @@ export interface ProfileSummary {
 
 
 export interface Profile extends ProfileSummary {
-    proxy: [string, string]
+    proxy: [string, string, string]
     language: Array<string>
     timezone: string
     resolution: string

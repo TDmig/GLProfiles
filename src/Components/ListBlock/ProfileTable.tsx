@@ -38,6 +38,7 @@ const ProfileTableWrapper = styled.div`
 
     b {
         font-weight: 700;
+        min-width: fit-content;
         
     }
 `
@@ -94,6 +95,14 @@ function HoverDiv({children, onClick}:
 }
 
 
+const LimitedText = styled.span`
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 80%;
+`
+
+
 export default function ProfileTable({profile, onEdit}: 
     {profile: Profile, onEdit: (field: string) => void}) {
 
@@ -102,7 +111,7 @@ export default function ProfileTable({profile, onEdit}:
             <HoverDiv onClick={() => onEdit('proxy')}>
                 <b>Proxy</b>
                 <span>{profile.proxy[0]}</span>
-                <DimmedText>{profile.proxy[1]}</DimmedText>
+                <DimmedText>{profile.proxy[2]}</DimmedText>
             </HoverDiv>
             <div>
                 <b>Language</b>
@@ -138,7 +147,7 @@ export default function ProfileTable({profile, onEdit}:
         <div>
             <HoverDiv onClick={() => onEdit('notes')}>
                 <b>Notes</b>
-                <span style={{'whiteSpace': 'break-spaces'}}>{profile.notes}</span>
+                <LimitedText>{profile.notes}</LimitedText>
             </HoverDiv>
             <div>
                 <b>Profile ID</b>

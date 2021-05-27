@@ -3,13 +3,14 @@ import styled from "styled-components"
 
 interface SearchContainerProps {
     active?: boolean
+    backgroundColor?: string
 }
 
 
-const SearchInputContainer = styled.div<SearchContainerProps>`
+const InputContainer = styled.div<SearchContainerProps>`
     border-radius: 1.56em;
     padding: 0.6em 1em;
-    background: #43484C;
+    background: ${props => props.backgroundColor ? props.backgroundColor : '#43484C'};
     width: ${props => props.active ? '100%' : '18em'};
 
     display: flex;
@@ -19,11 +20,16 @@ const SearchInputContainer = styled.div<SearchContainerProps>`
         margin-left: 0.5em;
     }
 
-    input {
+    input, textarea {
         width: 100%;
         background: none;
         border: none;
         outline: none;
+    }
+
+    textarea {
+        width: 20em;
+        height: 5em;
     }
 
     .material-icons, input::placeholder {
@@ -32,9 +38,20 @@ const SearchInputContainer = styled.div<SearchContainerProps>`
 `
 
 
+export function TextArea(props: {value: string, onChange: (newValue: string) => void}) {
+    return <InputContainer backgroundColor='#6C7175'>
+        <textarea
+            placeholder='...' 
+            value={props.value} onChange={e => props.onChange(e.target.value)}
+            style={{whiteSpace: 'break-spaces'}}
+        />
+    </InputContainer>
+}
+
+
 export default function SearchInput() {
-    return <SearchInputContainer>
+    return <InputContainer>
         <span className="material-icons">search</span>
         <input type='text' placeholder='Search profiles...'/>
-    </SearchInputContainer>
+    </InputContainer>
 }

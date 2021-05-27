@@ -4,7 +4,7 @@ import { ListBlock } from "./ListBlock";
 import LetterIcon from '../LetterIcon/index';
 import styled from 'styled-components';
 import ProfileStatus from './ProfileStatus'
-import { Profile, ProfileSummary, status } from '../../types'
+import { Profile, ProfileSummary } from '../../types'
 import ProfileTable from './ProfileTable';
 import { DimmedText } from '../TextStyles';
 
@@ -18,19 +18,19 @@ const ItemGridWrapper = styled.div`
 `
 
 
-export default function ProfileItem(props: {profile: Profile}) {
+export default function ProfileItem(props: {profile: Profile, onEdit: (field: string) => void}) {
     const [extended, setExtended] = useState(false)
 
 
     return <ListBlock>
         <ProfileSummaryItem 
             {...props.profile} 
-            onStatusChange={() => {}}
+            onStatusChange={() => props.onEdit('status')}
             onExtendToggle={() => setExtended(prev => !prev)}
         />
         {extended && <ProfileTable 
                 profile={props.profile}
-                onEdit={(f) => alert(f)}
+                onEdit={(f) => props.onEdit(f)}
             />
         }
     </ListBlock>

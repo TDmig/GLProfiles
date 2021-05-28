@@ -20,7 +20,30 @@ export default function ProfilesContainer(props: ProfilesContainerProps) {
 
 
     const hasSelected = selectedProfiles.length > 0
-    const allSelected = selectedProfiles.length === profiles.length
+    let allSelectedInAvailable = true
+    for (let profile of profiles) {
+        if (!selectedProfiles.includes(profile.profileID)) {
+            allSelectedInAvailable = false
+            break
+        }
+    }
+
+
+    function unselectAllCurrentlyAvailable() {
+        setSelectedProfiles(selectedProfiles.filter(
+            profileID => profiles.find(p => p.profileID === profileID) === undefined
+        ))
+    }
+
+
+    function selectAllCurrentlyAvailable() {
+        setSelectedProfiles(
+            [...selectedProfiles, ...profiles
+                .filter(p => !selectedProfiles.includes(p.profileID))
+                .reduce((acc: string[], cur) => [...acc, cur.profileID], [])
+            ]
+        )
+    }
 
 
     function toggleSelect(id: string) {
@@ -41,10 +64,11 @@ export default function ProfilesContainer(props: ProfilesContainerProps) {
 
     return <div>
         {hasSelected && <SelectionBar
-            allSelected={allSelected}
-            onToggleSelectAll={() => allSelected ? setSelectedProfiles([]) : setSelectedProfiles(
-                profiles.reduce((acc: string[], cur) => [...acc, cur.profileID], [])
-            )}
+            allSelected={allSelectedInAvailable}
+            onToggleSelectAll={() => allSelectedInAvailable 
+                ? unselectAllCurrentlyAvailable()
+                : selectAllCurrentlyAvailable()
+            }
             onCancel={() => setSelectedProfiles([])}
         />}
 

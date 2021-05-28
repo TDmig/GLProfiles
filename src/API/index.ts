@@ -98,7 +98,6 @@ export function editProfiles(profileID: string, field: string, value: any): Prof
         throw Error('Trying to edit unknown field')
     }
 
-    console.log(profile)
     return [...actualProfiles]
 }
 

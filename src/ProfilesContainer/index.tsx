@@ -54,7 +54,6 @@ export default function ProfilesContainer(props: ProfilesContainerProps) {
 
 
     function onEdit(f: string, profile: Profile) {
-        console.log(f, profile)
         if (f === 'status') {
             onEditProfile(profile.profileID, f, profile.status === 'ready' ? 'running' : 'ready')
         } else {

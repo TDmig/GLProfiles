@@ -26,7 +26,6 @@ export default function FilledEditModal(props: FilledEditModalProps) {
     const [value, setValue] = useState<any>(null)
 
     const onSave = () => {
-        console.log('hey', value)
         props.onSave(value)
     }
 

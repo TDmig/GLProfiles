@@ -38,6 +38,7 @@ export default function FolderBar(props: FolderBarProps) {
                 <NavButton 
                     active={folder === props.currentFolder}
                     onClick={() => props.onFolderChange(folder)}
+                    key={i}
                 >
                     {folder === null ? 'All profiles' : folder}
                 </NavButton>

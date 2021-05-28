@@ -103,7 +103,7 @@ function ProfilePrimary(props: {name: string, folders: string[]}) {
         <div>{props.name}</div>
         <FoldersSubText>
             {props.folders.map((folder) => 
-                <span>{folder}</span>
+                <span key={folder}>{folder}</span>
             )}
         </FoldersSubText>
     </div>

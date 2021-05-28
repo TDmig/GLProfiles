@@ -147,7 +147,10 @@ export default function ProfileTable({profile, onEdit}:
         <div>
             <HoverDiv onClick={() => onEdit('notes')}>
                 <b>Notes</b>
-                <LimitedText>{profile.notes}</LimitedText>
+                {profile.notes.trim().length > 0 
+                    ? <LimitedText>{profile.notes}</LimitedText>
+                    : <DimmedText>Empty</DimmedText>
+                }
             </HoverDiv>
             <div>
                 <b>Profile ID</b>

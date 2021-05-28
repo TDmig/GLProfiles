@@ -38,7 +38,13 @@ const InputContainer = styled.div<SearchContainerProps>`
 `
 
 
-export function TextArea(props: {value: string, onChange: (newValue: string) => void}) {
+interface TextInputProps {
+    value: string
+    onChange: (newValue: string) => void
+}
+
+
+export function TextArea(props: TextInputProps) {
     return <InputContainer backgroundColor='#6C7175'>
         <textarea
             placeholder='...' 
@@ -49,9 +55,11 @@ export function TextArea(props: {value: string, onChange: (newValue: string) => 
 }
 
 
-export default function SearchInput() {
+export default function SearchInput(props: TextInputProps) {
     return <InputContainer>
         <span className="material-icons">search</span>
-        <input type='text' placeholder='Search profiles...'/>
+        <input type='text' placeholder='Search profiles...'
+            value={props.value} onChange={e => props.onChange(e.target.value)}
+        />
     </InputContainer>
 }

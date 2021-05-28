@@ -16,10 +16,10 @@ const HeaderWrapper = styled.div`
 `
 
 
-export default function Header() {
+export default function Header(props: {searchText: string, onSearchChange: (s: string) => void}) {
     return <HeaderWrapper>
         <h1>Profiles</h1>
-        <SearchInput/>
+        <SearchInput value={props.searchText} onChange={(s) => props.onSearchChange(s)}/>
         <OutlinedButton color="green" bold>
             <span className="material-icons">add</span>
             <span>Create new profile</span>

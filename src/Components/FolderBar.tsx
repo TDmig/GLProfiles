@@ -19,21 +19,33 @@ const FolderBarWrapper = styled.div`
 `
 
 
-export default function FolderBar() {
+type folderType = null | string
+
+
+interface FolderBarProps {
+    folders: folderType[]
+    currentFolder: folderType
+    onFolderChange: (newFolder: folderType) => void
+}
+
+
+export default function FolderBar(props: FolderBarProps) {
+    const folders = [null, ...props.folders]
+
     return <FolderBarWrapper>
         <nav>
-            <NavButton active>
-                All profiles
-            </NavButton>
-            <NavButton>
-                SellerProfiles
-            </NavButton>
-            <NavButton>
-                JustFolder 1
-            </NavButton>
+            {folders.map((folder, i) => (
+                <NavButton 
+                    active={folder === props.currentFolder}
+                    onClick={() => props.onFolderChange(folder)}
+                >
+                    {folder === null ? 'All profiles' : folder}
+                </NavButton>
+            ))}
         </nav>
         <VerticalSeparator/>
         <DimmedButton>
+            {/* No ordering implemented for now */}
             <span>Last update</span>
             <span className="material-icons">
                 expand_more

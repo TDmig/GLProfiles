@@ -1,8 +1,8 @@
 import { Profile } from '../types';
-import { EditModal } from '../Components/Popups/index';
+import EditModal from "../Components/UI/Modals/EditModal";
 import { useState } from 'react';
-import Select from '../Components/Select';
-import { TextArea } from '../Components/SearchField';
+import Select from '../Components/UI/Select';
+import { TextArea } from 'Components/UI/Input';
 import { possibleValues } from 'API';
 
 

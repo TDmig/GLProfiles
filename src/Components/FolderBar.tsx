@@ -1,9 +1,9 @@
 import React from 'react'
-import { NavButton } from 'Components/Buttons/NavButton'
+import { NavButton } from 'Components/UI/Buttons/NavButton'
 
 
-import { VerticalSeparator } from './Separator'
-import { DimmedButton } from './Buttons'
+import { VerticalSeparator } from './UI/Separator'
+import { DimmedButton } from './UI/Buttons'
 import styled from 'styled-components';
 
 

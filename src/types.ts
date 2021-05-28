@@ -4,7 +4,7 @@ export type status = "running" | "ready"
 
 export interface ProfileSummary {
     name: string
-    folders: Array<string>
+    folders: string[]
     status: status
     platform: platform
     lastRun: string
@@ -13,11 +13,11 @@ export interface ProfileSummary {
 
 export interface Profile extends ProfileSummary {
     proxy: [string, string, string]
-    language: Array<string>
+    language: string[]
     timezone: string
     resolution: string
     geolocation: string
-    cookie: Array<string>
+    cookie: string[]
     notes: string
     profileID: string   
 }

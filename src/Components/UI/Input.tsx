@@ -55,7 +55,7 @@ export function TextArea(props: TextInputProps) {
 }
 
 
-export default function SearchInput(props: TextInputProps) {
+export function SearchInput(props: TextInputProps) {
     return <InputContainer>
         <span className="material-icons">search</span>
         <input type='text' placeholder='Search profiles...'

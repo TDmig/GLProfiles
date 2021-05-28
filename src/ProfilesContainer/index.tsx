@@ -1,5 +1,4 @@
-import FolderBar from "../Components/FolderBar";
-import ProfileItem from "../Components/ListBlock/ProfileItem";
+import ProfileItem from "../Components/ProfileItem";
 import { Profile } from '../types';
 import React, { useState } from 'react';
 import { SelectionBar } from "../Components/SelectionBar";

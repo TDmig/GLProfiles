@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Button, OutlinedButton } from './Buttons/index';
-import SearchInput from 'Components/SearchField'
+import { Button, OutlinedButton } from './UI/Buttons/index';
+import { SearchInput } from 'Components/UI/Input'
 import LetterIcon from './LetterIcon';
 import styled from 'styled-components';
 

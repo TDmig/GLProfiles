@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-import { DimmedText } from 'Components/TextStyles';
+import { DimmedText } from 'Components/UI/TextStyles';
 import { Profile } from 'types';
-import { HorizontalFlex } from 'Components/Flex';
-import { Button } from '../Buttons/index';
-import { useState } from 'react';
+import { HorizontalFlex } from 'Components/UI/Flex';
+import { Button } from '../UI/Buttons/index';
+import ShadowEditContainer from '../UI/Buttons/ShadowEditButton';
 
 
 const ProfileTableWrapper = styled.div`
@@ -44,75 +44,16 @@ const ProfileTableWrapper = styled.div`
 `
 
 
-function ChevronButtonEdit({onClick}: {onClick: () => void}) {
-    return <Button circle onClick={() => onClick()}>
-        <span className="material-icons">
-            expand_more
-        </span>
-    </Button>
-}
-
-
-const ShadowEditButton = styled.div`
-    position: absolute;
-    right: 0;
-    width: 4.6em;
-
-    height: 100%;
-
-    display: flex;
-    align-content: center;
-    justify-content: flex-end;
-    
-    & > * {
-        height: fit-content;
-        margin: auto 0;
-    }
-
-    user-select: none;
-    cursor: pointer;
-
-    text-decoration: underline;
-    background-image: linear-gradient(to left, #43484C, #43484C 50%, #43484C00);
-`
-
-
-function HoverDiv({children, onClick}: 
-    React.PropsWithChildren<{onClick: () => void}>) {
-
-    const [hovering, setHovering] = useState(false)
-    
-    return <div style={{'position': 'relative'}}
-        onClick={() => onClick()}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-    >
-        {children}
-        {hovering && <ShadowEditButton>
-            <div>edit</div>
-        </ShadowEditButton>}
-    </div>
-}
-
-
-const LimitedText = styled.span`
-    white-space: break-spaces;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-height: 80%;
-`
-
-
 export default function ProfileTable({profile, onEdit}: 
     {profile: Profile, onEdit: (field: string) => void}) {
 
     return <ProfileTableWrapper>
         <div>
-            <HoverDiv onClick={() => onEdit('proxy')}>
+            <ShadowEditContainer onClick={() => onEdit('proxy')}>
                 <b>Proxy</b>
                 <span>{profile.proxy[0]}</span>
                 <DimmedText>{profile.proxy[2]}</DimmedText>
-            </HoverDiv>
+            </ShadowEditContainer>
             <div>
                 <b>Language</b>
                 <span>{profile.language[0]}</span>
@@ -145,13 +86,13 @@ export default function ProfileTable({profile, onEdit}:
             </div>
         </div>
         <div>
-            <HoverDiv onClick={() => onEdit('notes')}>
+            <ShadowEditContainer onClick={() => onEdit('notes')}>
                 <b>Notes</b>
                 {profile.notes.trim().length > 0 
                     ? <LimitedText>{profile.notes}</LimitedText>
                     : <DimmedText>Empty</DimmedText>
                 }
-            </HoverDiv>
+            </ShadowEditContainer>
             <div>
                 <b>Profile ID</b>
                 <span>{profile.profileID}</span>
@@ -169,3 +110,20 @@ export default function ProfileTable({profile, onEdit}:
         </div>
     </ProfileTableWrapper>
 }
+
+
+function ChevronButtonEdit({onClick}: {onClick: () => void}) {
+    return <Button circle onClick={() => onClick()}>
+        <span className="material-icons">
+            expand_more
+        </span>
+    </Button>
+}
+
+
+const LimitedText = styled.span`
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 80%;
+`

@@ -1,8 +1,5 @@
 import FolderBar from "../Components/FolderBar";
-import ProfileItem from "../Components/ListBlock/ProfileItem";
-import { Profile } from '../types';
 import React, { useState } from 'react';
-import { SelectionBar } from "../Components/SelectionBar";
 import Header from '../Components/Header';
 import { useEffect } from 'react';
 import { actualProfiles, allFolders, editProfiles } from '../API/index';

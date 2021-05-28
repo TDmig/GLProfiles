@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useOutsideClick } from '../Utils/hooks';
+import { useOutsideClick } from '../../Utils/hooks';
 import { useRef } from 'react';
-import { HorizontalFlex } from 'Components/Flex';
+import { HorizontalFlex } from 'Components/UI/Flex';
 
 
-const DropDown = styled("div")<{width: string}>`
+const DropDown = styled.div<{width: string}>`
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
     width: ${props => props.width};
     background-color: #6C7175;
@@ -29,7 +29,7 @@ const DropDown = styled("div")<{width: string}>`
     }
 `
 
-const DropDownList = styled("ul")`
+const DropDownList = styled.ul`
     position: fixed;
     width: inherit;
     padding: 0;
@@ -44,7 +44,7 @@ const DropDownList = styled("ul")`
     }
 `
 
-const DropDownItem = styled("li")`
+const DropDownItem = styled.li`
     list-style: none;
     cursor: pointer;
 
@@ -61,7 +61,7 @@ const DropDownItem = styled("li")`
 
 
 interface SelectProps {
-    options: Array<string>
+    options: string[]
     selectedOption: string
     width: string
     onOptionChanged: (newOption: string) => void

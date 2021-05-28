@@ -1,6 +1,6 @@
-import { ListBlock } from "Components/ListBlock/ListBlock";
-import { Button, OutlinedButton } from './Buttons/index';
-import { CircledCheckbox } from './LetterIcon/index';
+import { ListBlock } from "Components/UI/ListBlock";
+import { Button, OutlinedButton } from './UI/Buttons/index';
+import { CircledCheckbox } from 'Components/UI/Checkbox';
 import styled from 'styled-components'
 
 

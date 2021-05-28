@@ -1,12 +1,12 @@
-import { Button } from 'Components/Buttons';
+import { Button } from 'Components/UI/Buttons';
 import React, { useState } from 'react'
-import { ListBlock } from "./ListBlock";
-import LetterIcon, { LetterWithCheckbox } from '../LetterIcon/index';
+import { ListBlock } from "../UI/ListBlock";
+import { LetterWithCheckbox } from '../LetterIcon/index';
 import styled from 'styled-components';
 import ProfileStatus from './ProfileStatus'
 import { Profile, ProfileSummary } from '../../types'
 import ProfileTable from './ProfileTable';
-import { DimmedText } from '../TextStyles';
+import { DimmedText } from '../UI/TextStyles';
 
 
 const ItemGridWrapper = styled.div`
@@ -98,7 +98,7 @@ const FoldersSubText = styled.div`
 `
 
 
-function ProfilePrimary(props: {name: string, folders: Array<string>}) {
+function ProfilePrimary(props: {name: string, folders: string[]}) {
     return <div className="flex_v">
         <div>{props.name}</div>
         <FoldersSubText>

@@ -1,5 +1,3 @@
-import React from 'react';
-import { useState } from 'react';
 import styled from 'styled-components';
 import { CircledCheckbox } from 'Components/UI/Checkbox';
 import { ProtoIcon } from './ProtoIcons';
@@ -29,16 +27,33 @@ export default function LetterIcon({letter}: {letter: string}) {
 }
 
 
-export function LetterWithCheckbox(props: {letter: string, isActive: boolean, onToggle: () => void}) {
-    const [hovered, setHovered] = useState(false)
+const LetterWithCheckboxWrapper = styled(ProtoIcon)`
+    position: relative;
+    & > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 
-    return <div
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-    >
-        {(!hovered && !props.isActive)
-            ? <LetterIcon letter={props.letter}/> 
-            : <CircledCheckbox isActive={props.isActive} onToggle={() => props.onToggle()}/>
+    .cool {
+        z-index: 10000;
+
+        opacity: 0;
+
+        &.active, &:hover {
+            opacity: 1;
         }
-    </div>
+    }
+`
+
+
+export function LetterWithCheckbox(props: {letter: string, isActive: boolean, onToggle: () => void}) {
+    return <LetterWithCheckboxWrapper>
+        <LetterIcon letter={props.letter}/> 
+        <div className={'cool ' + (props.isActive ? 'active' : '')}>
+            <CircledCheckbox isActive={props.isActive} onToggle={() => props.onToggle()}/>
+        </div>
+    </LetterWithCheckboxWrapper>
 }
